@@ -1,45 +1,25 @@
 import './App.css';
-import { useState } from 'react';
 
-import { useDispatch } from 'react-redux';
-import { actionsCitiesAddCity, actionsCitiesRemoveCity } from './store/actions/actionsCities';
-import { useSelector } from 'react-redux';
+import { Route, Switch, Redirect } from "react-router-dom";
+
+import CityGallery from './pages/CityGallery';
+import Header from './layout/Header';
 
 function App() {
     
-    const dispatch = useDispatch();
-    const cities = useSelector(state => state.cities);
-    const [cityInput, setCıtyInput] = useState("");
-    const [removeCityInput, setRemoveCityInput] = useState("");
-
-    function hChange(e) {
-        setCıtyInput(e.target.value);
-    }
-
-    function hRemoveCityChange(e) {
-        setRemoveCityInput(e.target.value);
-    }
-
-    function hClick() {
-        dispatch(actionsCitiesAddCity(cityInput));
-    }
-
-    function hClickRemove() {
-        dispatch(actionsCitiesRemoveCity(removeCityInput));
-    }
-  
     return (
     <div className="App">
         
-        <input onChange={hChange} value={cityInput}/>
-        <button onClick={hClick}>Add City</button>
+        <Header/>
+        <Switch>
+            <Route path="/city-gallery">
+              <CityGallery />
+            </Route>
 
-        <input onChange={hRemoveCityChange} value={removeCityInput}/>
-        <button onClick={hClickRemove}>remove city</button>
-
-        {
-            cities.map(city => <div>{city}</div>)
-        }
+            <Route path="/">
+              <Redirect to="/city-gallery" />
+            </Route>
+        </Switch>
     </div>
   );
 }
