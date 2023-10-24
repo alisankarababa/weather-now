@@ -4,9 +4,6 @@
     padding: 1em;
     border: 1px solid black;
     border-radius: 20px;
-
-    background-color: rgb(75,100,149);
-    background: linear-gradient(164deg, rgba(75,100,149,0.34217436974789917) 0%, rgba(131,64,148,0.8239670868347339) 60%, rgba(28,75,85,1) 100%);
 }
 
 .city-gallery__button {
