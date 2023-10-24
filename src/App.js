@@ -11,6 +11,8 @@ function App() {
     <div className="App">
         
         <Header/>
+
+        <div className='container'>
         <Switch>
             <Route path="/city-gallery">
               <CityGallery />
@@ -20,6 +22,7 @@ function App() {
               <Redirect to="/city-gallery" />
             </Route>
         </Switch>
+        </div>
     </div>
   );
 }
