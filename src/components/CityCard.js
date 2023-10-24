@@ -24,8 +24,8 @@ export default function CityCard({city, className}) {
     return (
 
         <div className={`card-city theme-dark ${className}`}>
-            <img className="card-city__icon" src={getWeatherIcon(city)} alt="weather-svg"/>
             <h2 className="card-city__name">{city.name}</h2>
+            <img className="card-city__icon" src={getWeatherIcon(city)} alt="weather-svg"/>
             <div className="card-city__temperature">
                 <span className="card-city__max">{city.max}</span>
                 <span className="card-city__min">{city.min}</span>
