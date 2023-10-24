@@ -23,7 +23,7 @@ export default function CityCard({city, className}) {
 
     return (
 
-        <div className={`card-city ${className}`}>
+        <div className={`card-city theme-dark ${className}`}>
             <img className="card-city__icon" src={getWeatherIcon(city)} alt="weather-svg"/>
             <h2 className="card-city__name">{city.name}</h2>
             <div className="card-city__temperature">

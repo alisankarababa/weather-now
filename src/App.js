@@ -8,7 +8,7 @@ import Header from './layout/Header';
 function App() {
     
     return (
-    <div className="App">
+    <div className="App theme-dark">
         
         <Header/>
 
