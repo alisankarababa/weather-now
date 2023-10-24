@@ -1,0 +1,24 @@
+.card-city {
+    aspect-ratio: 2 / 3;
+
+    border: 1px solid black;
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1em 1em;
+    align-items: center;
+}
+
+
+.card-city__temperature {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.card-city__icon {
+    width: 30%;
+    aspect-ratio: 1 / 1;
+}
