@@ -2,14 +2,18 @@
     display: flex;
     column-gap: 2em;
     padding: 1em;
+
+    container-type: inline-size;
+    container-name: city-gallery;
+
 }
 
-.city-gallery__button {
-    width: 30px;
-    height: 30px;
-    align-self: center;
+.city-gallery__cards {
+    display: flex;
+    align-items: center;
+    column-gap: 2em;
 }
 
-.city-gallery__item {
+.city-gallery__card {
     flex: 1 1 0;
 }
