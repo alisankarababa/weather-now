@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -45,4 +46,17 @@
 
 .theme-dark {
     background: linear-gradient(hsl(258, 79%, 77%), hsl(255,53%,27%));
+}
+
+.btn {
+    border: none;
+    padding: 0.75em 1.5em;
+}
+
+.btn-pill {
+    border-radius: 100rem;
+}
+
+.bg-purple {
+    background-color: purple;
 }
