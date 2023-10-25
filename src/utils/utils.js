@@ -1,3 +1,12 @@
+export function arrSliceCircular(arr, idxStart, cntItemWanted) {
+    const len = arr.length;
+    const retArr = [];
+    for(let i = idxStart; (retArr.length < len) && (i < idxStart + cntItemWanted); ++i) {
+        retArr.push(arr[i % len])
+    }
+    return retArr;
+}
+
 export function arrIncrementIdxCircularly(arr, idxCurrent) {
 
     if ( idxCurrent === arr.length - 1 )
