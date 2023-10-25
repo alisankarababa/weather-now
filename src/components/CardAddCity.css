@@ -1,0 +1,24 @@
+.add-city {
+    aspect-ratio: 2 / 3;
+
+    border: 1px solid black;
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1em 1em;
+    align-items: center;
+}
+
+.add-city__button {
+    width: 30%;
+}
+
+.add-city__icon {
+    width: 80%;
+}
+
+.add-city.theme-dark {
+    background: linear-gradient(hsl(240,89%,25%), hsl(286,67%,32%));
+}
