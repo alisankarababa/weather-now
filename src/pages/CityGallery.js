@@ -84,9 +84,9 @@ export default function CityGallery() {
             <img onClick={() => setIdxStart(arrDecrementIdxCircularly(cities, idxStart))} className="city-gallery__button"src={iconLeft} alt="icon-left"/>
             <div  className="city-gallery__cards">
                 {
-                    citiesToShow.map(city => <CityCard className=".wmax-400 city-gallery__card" key={city.id} city={city}/>)
+                    citiesToShow.map(city => <CityCard className="city-gallery__card" key={city.id} city={city}/>)
                 }
-                { widthCityGallery >= 480 && <CardAddCity className={`.wmax-400 city-gallery__card ${widthCityGallery >= 480 ? "display-none" : ""}`}/> }
+                { widthCityGallery >= 480 && <CardAddCity className="city-gallery__card"/> }
             </div>
             <img onClick={() => setIdxStart(arrIncrementIdxCircularly(cities, idxStart))} className="city-gallery__button" src={iconRight} alt="icon-rigth"/>
         </div>
