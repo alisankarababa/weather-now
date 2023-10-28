@@ -9,21 +9,67 @@
     justify-content: space-between;
     padding: 1em 1em;
     align-items: center;
+    text-transform: uppercase;
 }
 
+.card-city__name {
+    font-size: 1.2rem;
+}
 
-.card-city__temperature {
+.card-city__temp {
+    font-size: 2.5rem;
+}
+
+.card-city__temp::after {
+    content: "\00b0";
+}
+
+.card-city__tempextremas {
+    align-self: stretch;
     display: flex;
     justify-content: space-between;
-    width: 100%;
+}
+
+.card-city__tempextrema {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tempextrema__val {
+    font-size: 1.5rem;
+}
+
+.tempextrema__text {
+    font-size: .7rem;
+}
+
+.tempextrema__text.tempextrema--max {
+    color: hsl(0,78%,47%);
+}
+
+.tempextrema__icon.tempextrema--max {
+    filter: invert(17%) sepia(73%) saturate(5462%) hue-rotate(356deg) brightness(89%) contrast(88%);
+}
+
+.tempextrema__icon.tempextrema--min {
+    filter: invert(51%) sepia(100%) saturate(367%) hue-rotate(77deg) brightness(94%) contrast(94%);
+}
+.tempextrema__text.tempextrema--min {
+    color: hsl(128,62%,45%);
+}
+
+.card-city__weather {
+    font-size: 0.8rem;
 }
 
 .card-city__icon {
-    width: 30%;
+    width: 80%;
     aspect-ratio: 1 / 1;
 }
 
 .card-city.theme-dark {
     background: linear-gradient(hsl(240,89%,25%), hsl(286,67%,32%));
+    color: white;
 }
 

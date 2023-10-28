@@ -1,19 +1,47 @@
 import { CITIES_ADD, CITIES_REMOVE } from "../actions/actionsCities";
+import { actionsOfCities } from "../actions/actionsCities";
 
-const initialState = [
-	{ id: 1, name: "İstanbul", max: 15, min: 0, weather: "cloudy" },
-    { id: 2, name: "Sivas", max: 7, min: -3, weather: "snowy" },
-    { id: 3, name: "Bursa", max: 12, min: 4, weather: "rainy" },
-    { id: 4, name: "Adana", max: 22, min: 17, weather: "sunny" },
-];
+
+const initialState = {
+    cityList: [
+        { id: 1, name: "Sivas Merkez", lat: 39.7503572, lon: 37.0145185, country: "TR", current_weather: {}, main: null },
+        { id: 2, name: "Istanbul", lat: 41.0091982, lon: 28.9662187, country: "TR", current_weather: {}, main: null },
+        { id: 3, name: "Balıkesir", lat: 39.6473917, lon: 27.8879787, country: "TR", current_weather: {}, main: null },
+        { id: 4, name: "London", lat: 51.5073219, lon: -0.1276474, country: "GB", state: "England", current_weather: {}, main: null },
+    ],
+
+    isBusy: false,
+    error: null,
+};
 
 export default function reducerCities(state=initialState, action) {
 
     let retState;
 
     switch (action.type) {
+
+        case actionsOfCities.FETCHING_CITY_CURRENT_WEATHER:
+            return {...state, isBusy: true, error: null };
+
+        case actionsOfCities.FETCH_SUCCESS_CITY_CURRENT_WEATHER:
+
+            const cityId = action.payload.city_id;
+            const currentWeather = action.payload.response.data;
+
+            console.log(cityId, currentWeather);
+
+            const stateAfterFetchCurrentData = {...state, isBusy: false};
+            const idxCity = stateAfterFetchCurrentData.cityList.findIndex(city => city.id === cityId);
+            if(idxCity !== -1) {
+                stateAfterFetchCurrentData.cityList[idxCity].current_weather.weather = currentWeather.weather[0];
+                stateAfterFetchCurrentData.cityList[idxCity].current_weather.main = currentWeather.main;
+                stateAfterFetchCurrentData.cityList[idxCity].current_weather.dt = currentWeather.dt;
+            }
+
+            return stateAfterFetchCurrentData;
+        
         case CITIES_ADD:
-            const isCityInState = state.find(city => city === action.payload);
+            const isCityInState = state.find(city => city.name === action.payload);
             retState = isCityInState ? state : [...state, action.payload];
             break;
 

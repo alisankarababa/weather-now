@@ -10,31 +10,52 @@ import { useState, useEffect, useRef } from "react"
 
 import { arrSliceCircular, arrIncrementIdxCircularly, arrDecrementIdxCircularly } from "../utils/utils"
 
+import { citiesGetCityWeather } from "../store/actions/actionsCities"
+
+import { useDispatch } from "react-redux"
+
 export default function CityGallery() {
     
-    const cities = useSelector((store) => store.reducerCities);
+    const dispatch = useDispatch();
+    const cities = useSelector((store) => store.cities.cityList);
+    const isBusy = useSelector( store => store.cities.isBusy);
+
     const [idxStart, setIdxStart] = useState(0);
     const [citiesToShow, setCitiesToShow] = useState([]);
     const [cntCityCardToShow, setCntCityCardToShow] = useState(0);
 
-    const cityGalleryCards = useRef(null);
-    const [widthCityGalleryCards, setWidthCityGalleryCards] = useState(0);
+    const refCityGallery = useRef(null);
+    const [widthCityGallery, setWidthCityGallery] = useState(0);
     
     useEffect(() => {
 
-        if(widthCityGalleryCards >= 1000) {
-            setCntCityCardToShow(4);
-        }
-        else if(widthCityGalleryCards >= 800) {
+        if(widthCityGallery >= 1000) {
             setCntCityCardToShow(3);
-
-        } else if(widthCityGalleryCards >= 650) {
+        }
+        else if(widthCityGallery >= 800) {
             setCntCityCardToShow(2);
         }
         else {
             setCntCityCardToShow(1);
         }
-    }, [widthCityGalleryCards])
+    }, [widthCityGallery])
+
+    useEffect(() => {
+    
+        if (isBusy)
+            return;
+    
+        const citiesToFetch = citiesToShow.filter(city => Object.keys(city.current_weather).length === 0);
+    
+        if (citiesToFetch.length > 0) {
+            citiesToFetch.forEach(city => {
+                dispatch(citiesGetCityWeather(city));
+            });
+        }
+
+    }, [citiesToShow, isBusy]);
+
+
 
     useEffect(() => {
         setCitiesToShow(arrSliceCircular(cities, idxStart, cntCityCardToShow));
@@ -42,9 +63,9 @@ export default function CityGallery() {
 
     useEffect(() => {
         const updateComponentWidth = () => {
-            if (cityGalleryCards.current) {
-            const width = cityGalleryCards.current.getBoundingClientRect().width;
-            setWidthCityGalleryCards(width);
+            if (refCityGallery.current) {
+            const width = refCityGallery.current.getBoundingClientRect().width;
+            setWidthCityGallery(width);
             }
         };
     
@@ -59,17 +80,17 @@ export default function CityGallery() {
 
     return (
         <>
-        <div className="city-gallery">
+        <div ref={refCityGallery} className="city-gallery">
             <img onClick={() => setIdxStart(arrDecrementIdxCircularly(cities, idxStart))} className="city-gallery__button"src={iconLeft} alt="icon-left"/>
-            <div ref={cityGalleryCards} className="city-gallery__cards">
+            <div  className="city-gallery__cards">
                 {
-                    citiesToShow.map(city => <CityCard className="city-gallery__card" key={city.id} city={city}/>)
+                    citiesToShow.map(city => <CityCard className=".wmax-400 city-gallery__card" key={city.id} city={city}/>)
                 }
-                { widthCityGalleryCards >= 320 && <CardAddCity className="city-gallery__card"/> }
+                { widthCityGallery >= 480 && <CardAddCity className={`.wmax-400 city-gallery__card ${widthCityGallery >= 480 ? "display-none" : ""}`}/> }
             </div>
             <img onClick={() => setIdxStart(arrIncrementIdxCircularly(cities, idxStart))} className="city-gallery__button" src={iconRight} alt="icon-rigth"/>
         </div>
-        { widthCityGalleryCards < 320 && <button className="btn btn-pill bg-purple">ADD CITY</button>}
+        { widthCityGallery < 480 && <button className="btn btn-pill bg-purple">ADD CITY</button>}
         </>
 
     );
