@@ -69,13 +69,14 @@ export default function reducerCities(state=initialState, action) {
                 main: null,
             }
 
-            console.log(newCity);
-
             if ( cityToBeAdded.state )
                 newCity.state = cityToBeAdded.state;
 
-            console.log({...state, cityList: [...state.cityList, newCity]});
             return {...state, cityList: [...state.cityList, newCity]};
+
+        case actionsOfCities.DELETE_CITY:
+            
+            return { ...state, cityList: state.cityList.filter( city => city.id !== action.payload ) };
 
         default:
             retState = state;

@@ -3,7 +3,7 @@ import "./CityCard.css"
 import iconUp from "../assets/chevron-up.svg"
 import iconDown from "../assets/chevron-down.svg"
 
-export default function CityCard({city, className}) {
+export default function CityCard({city, className, hDelete }) {
     
     function getWeatherIcon(city) {
         return `https://openweathermap.org/img/wn/${city.current_weather.weather.icon}@2x.png`
@@ -28,11 +28,13 @@ export default function CityCard({city, className}) {
                     <span className="tempextrema__text tempextrema--min">Min</span>
                 </div>
                 <div className="card-city__tempextrema tempextrema">
-                    <img className="tempextrema__icon tempextrema--max" src={iconUp} alt="svg"/>          
+                    <img className="tempextrema__icon tempextrema--max" src={iconUp} alt="svg"/>       
                     <span className="tempextrema__val tempextrema--max">{Math.ceil(city.current_weather.main.temp_max)}</span>
                     <span className="tempextrema__text tempextrema--max">Max</span>
                 </div>
             </div>
+
+            <button onClick={ () => hDelete(city.id) } className="card-city__btndelete btn btn-pill btn-block">Delete</button>
             </>
             ) 
             :

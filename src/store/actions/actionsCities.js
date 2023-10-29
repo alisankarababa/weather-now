@@ -1,11 +1,8 @@
 import axios from "axios";
 
-
-export const CITIES_ADD = "CITIES_ADD";
-export const CITIES_REMOVE = "CITIES_REMOVE";
-
 export const actionsOfCities = {
     ADD_CITY: "cities / got coordinates of a city to add to cityList",
+    DELETE_CITY: "cities / got id of a city to remove from cityList",
     GET_CITY_CURRENT_WEATHER: "cities/ got an order to get current city weather",
     FETCHING_CITY_CURRENT_WEATHER: "cities/ getting current weather",
     FETCH_SUCCESS_CITY_CURRENT_WEATHER: "cities/ got current weather",
@@ -19,6 +16,10 @@ export const actionsOfCities = {
 
 export function actionsCitiesAddCity( city ) {
     return {type: actionsOfCities.ADD_CITY, payload: city }
+}
+
+export function actionsCitiesDeleteCity( cityId ) {
+    return {type: actionsOfCities.DELETE_CITY, payload: cityId }
 }
 
 export const citiesGetCityWeather = ( city ) => (dispatch) => {

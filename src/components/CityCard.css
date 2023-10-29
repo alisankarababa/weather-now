@@ -64,8 +64,16 @@
 }
 
 .card-city__icon {
-    width: 80%;
+    width: 60%;
     aspect-ratio: 1 / 1;
+}
+
+.card-city__btndelete {
+    margin-top: 1em;
+}
+
+.theme-dark .card-city__btndelete {
+    background-color: hsla(0, 100%, 19%, 0.89);
 }
 
 .card-city.theme-dark {

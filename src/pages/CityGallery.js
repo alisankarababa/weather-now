@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 
 import { arrSliceCircular, arrIncrementIdxCircularly, arrDecrementIdxCircularly } from "../utils/utils"
 
-import { citiesGetCityWeather, citiesSearchCity, actionsCitiesAddCity } from "../store/actions/actionsCities"
+import { citiesGetCityWeather, citiesSearchCity, actionsCitiesAddCity, actionsCitiesDeleteCity } from "../store/actions/actionsCities"
 
 import { useDispatch } from "react-redux"
 
@@ -29,8 +29,13 @@ export default function CityGallery() {
     const refCityGallery = useRef(null);
     const [widthCityGallery, setWidthCityGallery] = useState(0);
 
-    function hAddCity( city ) {
+    function hAddCity ( city ) {
         dispatch(actionsCitiesAddCity(city));
+    }
+
+    function hDeleteCity ( cityId ) {
+        dispatch(actionsCitiesDeleteCity(cityId));
+
     }
     
     useEffect(() => {
@@ -59,8 +64,13 @@ export default function CityGallery() {
             });
         }
 
-    }, [citiesToShow, isBusy]);
+    }, [ citiesToShow, isBusy ]);
 
+    useEffect(() => {
+        console.log("city added");
+        console.log("cities", cities);
+
+    }, [cities]);
 
     const [isCitySearchOpen, setIsCitySearchOpen] = useState();
 
@@ -105,7 +115,7 @@ export default function CityGallery() {
             <img onClick={() => setIdxStart(arrDecrementIdxCircularly(cities, idxStart))} className="city-gallery__button"src={iconLeft} alt="icon-left"/>
             <div  className="city-gallery__cards">
                 {
-                    citiesToShow.map(city => <CityCard className="city-gallery__card" key={city.id} city={city}/>)
+                    citiesToShow.map(city => <CityCard hDelete={hDeleteCity} className="city-gallery__card" key={city.id} city={city}/>)
                 }
                 { widthCityGallery >= 480 && <CardAddCity onClick={toggleCitySearch} className="city-gallery__card"/> }
             </div>
@@ -130,9 +140,9 @@ export default function CityGallery() {
                         searchResult.map( city => 
                             {
                                 if(city.state)
-                                    return <li onClick={() => hAddCity(city)}>{city.name}, {city.state}/{city.country}</li>
+                                    return <li onClick={() => hAddCity(city)} key={city.name}>{city.name}, {city.state}/{city.country}</li>
 
-                                return <li onClick={() => hAddCity(city)}>{city.name}, {city.country}</li>
+                                return <li onClick={() => hAddCity(city)} key={city.name}>{city.name}, {city.country}</li>
                             })
                     }
                 </ul>
