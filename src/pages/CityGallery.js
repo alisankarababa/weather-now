@@ -115,18 +115,29 @@ export default function CityGallery() {
         
         <div className={`city-search ${isCitySearchOpen ? "disp-block" : "disp-none"}`}>
 
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form  onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="input-search-city">City:</label>
                 <input id="input-search-city" type="search" className="input-field" placeholder="Search cities..." {...register("city_name", {required: true, maxLength: 80})} />
                 <input type="submit" className="btn" value="Search"/>
-
-                <div className="search-results">
-                    <ul>
-                        
-                    </ul>
-                </div>
-
             </form>
+
+            {
+            searchResult.length > 0 &&
+
+            <div className="search-results">
+                <ul>
+                    {
+                        searchResult.map( city => 
+                            {
+                                if(city.state)
+                                    return <li onClick={() => hAddCity(city)}>{city.name}, {city.state}/{city.country}</li>
+
+                                return <li onClick={() => hAddCity(city)}>{city.name}, {city.country}</li>
+                            })
+                    }
+                </ul>
+            </div>
+            }
         </div>
         </>
 

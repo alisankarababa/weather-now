@@ -24,3 +24,19 @@
     flex-basis: 0;
     max-width: 250px;
 }
+
+
+.search-results {
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
+.search-results ul {
+    list-style: none;
+
+}
+
+.search-results li {
+    text-align: left;
+    margin-bottom: 0.5em;
+}
