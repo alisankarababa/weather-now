@@ -5,10 +5,10 @@ import { actionsOfCities } from "../actions/actionsCities";
 
 const initialState = {
     cityList: [
-        { id: 1, name: "Sivas Merkez", lat: 39.7503572, lon: 37.0145185, country: "TR", current_weather: {}, main: null },
-        { id: 2, name: "Istanbul", lat: 41.0091982, lon: 28.9662187, country: "TR", current_weather: {}, main: null },
-        { id: 3, name: "Balıkesir", lat: 39.6473917, lon: 27.8879787, country: "TR", current_weather: {}, main: null },
-        { id: 4, name: "London", lat: 51.5073219, lon: -0.1276474, country: "GB", state: "England", current_weather: {}, main: null },
+        { id: 1, name: "Sivas Merkez", lat: 39.7503572, lon: 37.0145185, country: "TR", current_weather: {} },
+        { id: 2, name: "Istanbul", lat: 41.0091982, lon: 28.9662187, country: "TR", current_weather: {} },
+        { id: 3, name: "Balıkesir", lat: 39.6473917, lon: 27.8879787, country: "TR", current_weather: {} },
+        { id: 4, name: "London", lat: 51.5073219, lon: -0.1276474, country: "GB", state: "England", current_weather: {} },
     ],
 
     searchResult: [],
