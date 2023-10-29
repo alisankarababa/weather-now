@@ -7,10 +7,11 @@ import CardAddCity from "../components/CardAddCity"
 import iconRight from "../assets/chevron-compact-right.svg"
 import iconLeft from "../assets/chevron-compact-left.svg"
 import { useState, useEffect, useRef } from "react"
+import { useForm } from 'react-hook-form';
 
 import { arrSliceCircular, arrIncrementIdxCircularly, arrDecrementIdxCircularly } from "../utils/utils"
 
-import { citiesGetCityWeather } from "../store/actions/actionsCities"
+import { citiesGetCityWeather, citiesSearchCity } from "../store/actions/actionsCities"
 
 import { useDispatch } from "react-redux"
 
@@ -56,6 +57,10 @@ export default function CityGallery() {
     }, [citiesToShow, isBusy]);
 
 
+    const [isCitySearchOpen, setIsCitySearchOpen] = useState();
+
+    
+
 
     useEffect(() => {
         setCitiesToShow(arrSliceCircular(cities, idxStart, cntCityCardToShow));
@@ -78,6 +83,17 @@ export default function CityGallery() {
         };
     }, []);
 
+    function toggleCitySearch() {
+        setIsCitySearchOpen(!isCitySearchOpen);
+    }
+
+    const onSubmit = data => {
+        dispatch(citiesSearchCity(data.city_name));
+    };
+
+    const { register, handleSubmit, formState: { errors } } = useForm();
+
+
     return (
         <>
         <div ref={refCityGallery} className="city-gallery">
@@ -86,11 +102,27 @@ export default function CityGallery() {
                 {
                     citiesToShow.map(city => <CityCard className="city-gallery__card" key={city.id} city={city}/>)
                 }
-                { widthCityGallery >= 480 && <CardAddCity className="city-gallery__card"/> }
+                { widthCityGallery >= 480 && <CardAddCity onClick={toggleCitySearch} className="city-gallery__card"/> }
             </div>
             <img onClick={() => setIdxStart(arrIncrementIdxCircularly(cities, idxStart))} className="city-gallery__button" src={iconRight} alt="icon-rigth"/>
         </div>
-        { widthCityGallery < 480 && <button className="btn btn-pill bg-purple">ADD CITY</button>}
+        { widthCityGallery < 480 && <button onClick={toggleCitySearch} className="btn btn-pill bg-purple">ADD CITY</button> }
+        
+        <div className={`city-search ${isCitySearchOpen ? "disp-block" : "disp-none"}`}>
+
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <label htmlFor="input-search-city">City:</label>
+                <input id="input-search-city" type="search" className="input-field" placeholder="Search cities..." {...register("city_name", {required: true, maxLength: 80})} />
+                <input type="submit" className="btn" value="Search"/>
+
+                <div className="search-results">
+                    <ul>
+                        
+                    </ul>
+                </div>
+
+            </form>
+        </div>
         </>
 
     );

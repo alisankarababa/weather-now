@@ -10,6 +10,8 @@ const initialState = {
         { id: 4, name: "London", lat: 51.5073219, lon: -0.1276474, country: "GB", state: "England", current_weather: {}, main: null },
     ],
 
+    searchResult: [],
+
     isBusy: false,
     error: null,
 };
@@ -28,8 +30,6 @@ export default function reducerCities(state=initialState, action) {
             const cityId = action.payload.city_id;
             const currentWeather = action.payload.response.data;
 
-            console.log(cityId, currentWeather);
-
             const stateAfterFetchCurrentData = {...state, isBusy: false};
             const idxCity = stateAfterFetchCurrentData.cityList.findIndex(city => city.id === cityId);
             if(idxCity !== -1) {
@@ -39,6 +39,15 @@ export default function reducerCities(state=initialState, action) {
             }
 
             return stateAfterFetchCurrentData;
+
+        case actionsOfCities.FETCHING_CITY_SEARCH:
+            return {...state, isBusy: true, error: null, searchResult: [] };
+
+        case actionsOfCities.FETCH_SUCCESS_CITY_SEARCH:
+            return { ...state, isBusy: false, searchResult: action.payload };
+
+        case actionsOfCities.FETCH_FAIL_CITY_SEARCH:
+            return { ...state, isBusy: false, error: action.payload };
         
         case CITIES_ADD:
             const isCityInState = state.find(city => city.name === action.payload);

@@ -9,6 +9,10 @@ export const actionsOfCities = {
     FETCHING_CITY_CURRENT_WEATHER: "cities/ getting current weather",
     FETCH_SUCCESS_CITY_CURRENT_WEATHER: "cities/ got current weather",
     FETCH_FAIL_CITY_CURRENT_WEATHER: "cities/ got current weather",
+    GET_CITY_SEARCH: "cities/ got an order to search for a city",
+    FETCHING_CITY_SEARCH: "cities/ searching for a city",
+    FETCH_SUCCESS_CITY_SEARCH: "cities/ search for a city name succeded",
+    FETCH_FAIL_CITY_SEARCH: "cities/ search for a city name failed",
 }
 
 
@@ -44,4 +48,30 @@ function citiesFecthSuccessCityCurrentWeather(city_id, response) {
 
 function citiesFecthFailCityCurrentWeather() {
     return { type: actionsOfCities.FETCH_FAIL_CITY_CURRENT_WEATHER };
+}
+
+export const citiesSearchCity = ( searchedName ) => (dispatch) => {
+
+    dispatch(citiesFetchingCitySearch());
+
+    axios
+      .get(`https://api.openweathermap.org/geo/1.0/direct?appid=044352fbcf42eca0fb4e322f1140c447&limit=5&q=${searchedName}`)
+      .then((res) => {
+        dispatch(citiesFetchSuccessCitySearch(res.data));
+    })
+      .catch((err) => {
+        dispatch(citiesFetchFailureCitySearch(err.message));
+    });
+}
+
+const citiesFetchingCitySearch = () => {
+    return  {type: actionsOfCities.FETCHING_CITY_SEARCH };
+}
+
+const citiesFetchSuccessCitySearch = (res) => {
+    return { type: actionsOfCities.FETCH_SUCCESS_CITY_SEARCH, payload:res };
+}
+
+const citiesFetchFailureCitySearch = (err) => {
+    return { type: actionsOfCities.FETCH_FAIL_CITY_SEARCH, payload: err };
 }
