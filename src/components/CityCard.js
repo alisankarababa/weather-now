@@ -24,12 +24,12 @@ export default function CityCard({city, className}) {
             <div className="card-city__tempextremas">
                 <div className="card-city__tempextrema">
                     <img className="tempextrema__icon tempextrema--min" src={iconDown} alt="svg"/>                        
-                    <span className="tempextrema__val tempextrema--min">{Math.trunc(city.current_weather.main.temp_min)}</span>
+                    <span className="tempextrema__val tempextrema--min">{Math.floor(city.current_weather.main.temp_min)}</span>
                     <span className="tempextrema__text tempextrema--min">Min</span>
                 </div>
                 <div className="card-city__tempextrema tempextrema">
                     <img className="tempextrema__icon tempextrema--max" src={iconUp} alt="svg"/>          
-                    <span className="tempextrema__val tempextrema--max">{Math.trunc(city.current_weather.main.temp_max)}</span>
+                    <span className="tempextrema__val tempextrema--max">{Math.ceil(city.current_weather.main.temp_max)}</span>
                     <span className="tempextrema__text tempextrema--max">Max</span>
                 </div>
             </div>
