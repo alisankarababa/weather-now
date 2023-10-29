@@ -1,4 +1,5 @@
-import { CITIES_ADD, CITIES_REMOVE } from "../actions/actionsCities";
+import { nanoid } from 'nanoid'
+
 import { actionsOfCities } from "../actions/actionsCities";
 
 
@@ -49,14 +50,33 @@ export default function reducerCities(state=initialState, action) {
         case actionsOfCities.FETCH_FAIL_CITY_SEARCH:
             return { ...state, isBusy: false, error: action.payload };
         
-        case CITIES_ADD:
-            const isCityInState = state.find(city => city.name === action.payload);
-            retState = isCityInState ? state : [...state, action.payload];
-            break;
+        case actionsOfCities.ADD_CITY:
+            
+            const cityToBeAdded = action.payload;
 
-        case CITIES_REMOVE:
-            retState = state.filter(city => city !== action.payload);
-            break;
+            const isCityInState = state.cityList.find(city => city.lat === cityToBeAdded.lat && city.lon === cityToBeAdded.lon );
+            if ( isCityInState )
+                return state; // TODO add an error to say that city is already in the list
+
+            const newCity = {
+                
+                id: nanoid(),
+                name: cityToBeAdded.name,
+                lat: cityToBeAdded.lat,
+                lon: cityToBeAdded.lon,
+                country: cityToBeAdded.country,
+                current_weather: {},
+                main: null,
+            }
+
+            console.log(newCity);
+
+            if ( cityToBeAdded.state )
+                newCity.state = cityToBeAdded.state;
+
+            console.log({...state, cityList: [...state.cityList, newCity]});
+            return {...state, cityList: [...state.cityList, newCity]};
+
         default:
             retState = state;
             break;

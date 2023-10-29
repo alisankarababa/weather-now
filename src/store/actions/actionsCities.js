@@ -5,6 +5,7 @@ export const CITIES_ADD = "CITIES_ADD";
 export const CITIES_REMOVE = "CITIES_REMOVE";
 
 export const actionsOfCities = {
+    ADD_CITY: "cities / got coordinates of a city to add to cityList",
     GET_CITY_CURRENT_WEATHER: "cities/ got an order to get current city weather",
     FETCHING_CITY_CURRENT_WEATHER: "cities/ getting current weather",
     FETCH_SUCCESS_CITY_CURRENT_WEATHER: "cities/ got current weather",
@@ -16,12 +17,8 @@ export const actionsOfCities = {
 }
 
 
-export function actionsCitiesAddCity(city) {
-    return {type: CITIES_ADD, payload: city}
-}
-
-export function actionsCitiesRemoveCity(city) {
-    return {type: CITIES_REMOVE, payload: city}
+export function actionsCitiesAddCity( city ) {
+    return {type: actionsOfCities.ADD_CITY, payload: city }
 }
 
 export const citiesGetCityWeather = ( city ) => (dispatch) => {

@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 
 import { arrSliceCircular, arrIncrementIdxCircularly, arrDecrementIdxCircularly } from "../utils/utils"
 
-import { citiesGetCityWeather, citiesSearchCity } from "../store/actions/actionsCities"
+import { citiesGetCityWeather, citiesSearchCity, actionsCitiesAddCity } from "../store/actions/actionsCities"
 
 import { useDispatch } from "react-redux"
 
@@ -19,6 +19,7 @@ export default function CityGallery() {
     
     const dispatch = useDispatch();
     const cities = useSelector((store) => store.cities.cityList);
+    const searchResult = useSelector( store => store.cities.searchResult);
     const isBusy = useSelector( store => store.cities.isBusy);
 
     const [idxStart, setIdxStart] = useState(0);
@@ -27,6 +28,10 @@ export default function CityGallery() {
 
     const refCityGallery = useRef(null);
     const [widthCityGallery, setWidthCityGallery] = useState(0);
+
+    function hAddCity( city ) {
+        dispatch(actionsCitiesAddCity(city));
+    }
     
     useEffect(() => {
 
