@@ -47,6 +47,15 @@ button {
     text-transform: inherit;
 }
 
+input {
+    font-size: inherit;
+}
+
+ul {
+    padding: 0;
+    list-style: none;
+}
+
 .disp-block {
     display: block;
 }
@@ -88,4 +97,12 @@ button {
 
 .bg-purple {
     background-color: purple;
+}
+
+
+@media (max-width: 830px) {
+
+    html {
+        font-size: 12px;
+    }
 }
