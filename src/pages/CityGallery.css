@@ -1,15 +1,16 @@
 .city-gallery {
+    container-type: inline-size;
+    container-name: city-gallery;
+}
+
+.gallery {
     display: flex;
     justify-content: space-between;
     column-gap: 2em;
     padding: 1em;
-
-    container-type: inline-size;
-    container-name: city-gallery;
-
 }
 
-.city-gallery__cards {
+.gallery__cards {
     flex-grow: 1;
     
     display: flex;
@@ -18,25 +19,9 @@
     column-gap: 2em;
 }
 
-.city-gallery__card {
+.gallery__card {
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 0;
     max-width: 250px;
-}
-
-
-.search-results {
-    border: 1px solid black;
-    border-radius: 20px;
-}
-
-.search-results ul {
-    list-style: none;
-
-}
-
-.search-results li {
-    text-align: left;
-    margin-bottom: 0.5em;
 }

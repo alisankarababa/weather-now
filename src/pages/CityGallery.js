@@ -14,6 +14,7 @@ import { arrSliceCircular, arrIncrementIdxCircularly, arrDecrementIdxCircularly 
 import { citiesGetCityWeather, citiesSearchCity, actionsCitiesAddCity, actionsCitiesDeleteCity } from "../store/actions/actionsCities"
 
 import { useDispatch } from "react-redux"
+import PopUpSearch from "../components/PopUpSearch"
 
 export default function CityGallery() {
     
@@ -35,15 +36,23 @@ export default function CityGallery() {
 
     function hDeleteCity ( cityId ) {
         dispatch(actionsCitiesDeleteCity(cityId));
+    }
 
+    function renderSearchResult( city ) {
+
+        if ( city.state ) {
+            return `${city.name}, ${city.state}/${city.country}`;
+        }
+
+        return `${city.name}, ${city.country}`;
     }
     
     useEffect(() => {
 
-        if(widthCityGallery >= 1000) {
+        if(widthCityGallery >= 1100) {
             setCntCityCardToShow(3);
         }
-        else if(widthCityGallery >= 800) {
+        else if(widthCityGallery >= 900) {
             setCntCityCardToShow(2);
         }
         else {
@@ -88,65 +97,51 @@ export default function CityGallery() {
             setWidthCityGallery(width);
             }
         };
+
+        function hKeyDown (e) {
+
+            if ( "Escape" === e.key ) {
+                setIsCitySearchOpen(false);
+            }
+        }
     
         updateComponentWidth();
-    
+
         window.addEventListener('resize', updateComponentWidth);
+        document.addEventListener("keydown", hKeyDown);
     
         return () => {
             window.removeEventListener('resize', updateComponentWidth);
+            document.removeEventListener("keydown", hKeyDown)
         };
     }, []);
 
-    function toggleCitySearch() {
-        setIsCitySearchOpen(!isCitySearchOpen);
-    }
-
-    const onSubmit = data => {
-        dispatch(citiesSearchCity(data.city_name));
-    };
-
-    const { register, handleSubmit, formState: { errors } } = useForm();
-
-
+    
     return (
         <>
         <div ref={refCityGallery} className="city-gallery">
-            <img onClick={() => setIdxStart(arrDecrementIdxCircularly(cities, idxStart))} className="city-gallery__button"src={iconLeft} alt="icon-left"/>
-            <div  className="city-gallery__cards">
-                {
-                    citiesToShow.map(city => <CityCard hDelete={hDeleteCity} className="city-gallery__card" key={city.id} city={city}/>)
-                }
-                { widthCityGallery >= 480 && <CardAddCity onClick={toggleCitySearch} className="city-gallery__card"/> }
+            <div className="gallery">
+                <img onClick={() => setIdxStart(arrDecrementIdxCircularly(cities, idxStart))} className="gallery__button"src={iconLeft} alt="icon-left"/>
+                <div  className="gallery__cards">
+                    {
+                        citiesToShow.map(city => <CityCard hDelete={hDeleteCity} className="gallery__card" key={city.id} city={city}/>)
+                    }
+                    { widthCityGallery >= 600 && <CardAddCity onClick={ () => setIsCitySearchOpen(true) } className="gallery__card"/> }
+                </div>
+                <img onClick={() => setIdxStart(arrIncrementIdxCircularly(cities, idxStart))} className="gallery__button" src={iconRight} alt="icon-rigth"/>
             </div>
-            <img onClick={() => setIdxStart(arrIncrementIdxCircularly(cities, idxStart))} className="city-gallery__button" src={iconRight} alt="icon-rigth"/>
-        </div>
-        { widthCityGallery < 480 && <button onClick={toggleCitySearch} className="btn btn-pill bg-purple">ADD CITY</button> }
-        
-        <div className={`city-search ${isCitySearchOpen ? "disp-block" : "disp-none"}`}>
-
-            <form  onSubmit={handleSubmit(onSubmit)}>
-                <label htmlFor="input-search-city">City:</label>
-                <input id="input-search-city" type="search" className="input-field" placeholder="Search cities..." {...register("city_name", {required: true, maxLength: 80})} />
-                <input type="submit" className="btn" value="Search"/>
-            </form>
+            { widthCityGallery < 600 && <button onClick={() => setIsCitySearchOpen(true)} className="btn btn-pill bg-purple">ADD CITY</button> }
 
             {
-            searchResult.length > 0 &&
-
-            <div className="search-results">
-                <ul>
-                    {
-                        searchResult.map( city => 
-                            {
-                                if(city.state)
-                                    return <li onClick={() => hAddCity(city)} key={city.name}>{city.name}, {city.state}/{city.country}</li>
-
-                                return <li onClick={() => hAddCity(city)} key={city.name}>{city.name}, {city.country}</li>
-                            })
-                    }
-                </ul>
-            </div>
+                isCitySearchOpen &&
+            
+                <PopUpSearch
+                    hSearch={ (searchValue) => dispatch( citiesSearchCity( searchValue ) ) }
+                    hClickResult={ (idx) => dispatch( actionsCitiesAddCity( searchResult[idx] ) ) }
+                    placeholder="Search a city..."
+                    results={ searchResult }
+                    renderResult={ renderSearchResult }
+                />
             }
         </div>
         </>
