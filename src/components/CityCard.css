@@ -1,7 +1,6 @@
 .card-city {
     aspect-ratio: 2 / 3;
 
-    border: 1px solid black;
     border-radius: 20px;
 
     display: flex;
