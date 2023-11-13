@@ -1,6 +1,10 @@
 .popup-search-container {
     container-type: inline-size;
     container-name: popup-search-container;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    margin: 0 auto;
 }
 
 .popup-search {
@@ -12,9 +16,6 @@
 
 .popup-search__form {
     display: grid;
-    border: 1px solid black;
-    border-radius: 10px;
-    overflow: hidden;
 }
 
 .popup-search__form__item {
@@ -22,16 +23,10 @@
     padding: 1em;
 }
 
-.popup-search__form__item + .popup-search__form__item {
-    border-left: 1px solid black;
-}
-
 .popup-search__form__button {
     cursor: pointer;
-     background-color: rgb(84, 82, 216);
+    background-color: rgb(84, 82, 216);
 }
-
-
 
 .popup-search__results {
     text-align: left;
@@ -57,7 +52,20 @@
 @container popup-search-container (max-width: 400px) {
 
     .popup-search__form__search-input-label {
+        padding-left: 0;
+    }
+
+    .popup-search__form__search-input {
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+
+    .popup-search__form__search-input-label {
         text-align: left;
+    }
+
+    .popup-search__form__button {
+        border-radius: 5px;
     }
 
     .popup-search__form {
@@ -65,12 +73,8 @@
     }
 }
 
-@container popup-search-container (min-width: 400px) {
+@container popup-search-container (min-width: 401px) {
     
-    /* .popup-search__form {
-        border: 1px solid black;
-    } */
-
     .popup-search__results--container,
     .popup-search__form {
         align-items: stretch;
