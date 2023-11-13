@@ -1,6 +1,7 @@
 import { nanoid } from 'nanoid'
 
 import { actionsOfCities } from "../actions/actionsCities";
+import { toast } from 'react-toastify';
 
 
 const initialState = {
@@ -55,8 +56,11 @@ export default function reducerCities(state=initialState, action) {
             const cityToBeAdded = action.payload;
 
             const isCityInState = state.cityList.find(city => city.lat === cityToBeAdded.lat && city.lon === cityToBeAdded.lon );
-            if ( isCityInState )
-                return state; // TODO add an error to say that city is already in the list
+            if ( isCityInState ) {
+
+                toast.error("City is already in the city list!");
+                return state;
+            }
 
             const newCity = {
                 
