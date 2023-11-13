@@ -81,7 +81,16 @@ export default function reducerCities(state=initialState, action) {
 
         case actionsOfCities.DELETE_CITY:
             
-            return { ...state, cityList: state.cityList.filter( city => city.id !== action.payload ) };
+            
+            return { ...state, cityList: state.cityList.filter( city => {
+                
+                if ( city.id !== action.payload )
+                    return true;
+
+                toast.info(`${city.name} is removed from city list.`)
+
+                return false;
+            } ) };
         
         case actionsOfCities.SEARCH_RESULTS_CLEARED: {
             return { ...state, searchResult: []};
