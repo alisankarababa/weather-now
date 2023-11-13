@@ -76,6 +76,7 @@ export default function reducerCities(state=initialState, action) {
             if ( cityToBeAdded.state )
                 newCity.state = cityToBeAdded.state;
 
+            toast.success(`${newCity.name} added to city list.`)
             return {...state, cityList: [...state.cityList, newCity]};
 
         case actionsOfCities.DELETE_CITY:
