@@ -73,7 +73,6 @@ export default function CityGallery() {
 
     }, [ citiesToShow, isBusy ]);
 
-
     const [isCitySearchOpen, setIsCitySearchOpen] = useState();
 
 
@@ -93,7 +92,6 @@ export default function CityGallery() {
 
             if ( "Escape" === e.key ) {
                 setIsCitySearchOpen(false);
-                dispatch(actionCitiesClearSearchResults());
             }
         }
     
@@ -119,9 +117,14 @@ export default function CityGallery() {
         };
     }, []);
 
+    useEffect(() => {
+        if(!isCitySearchOpen)
+    		dispatch(actionCitiesClearSearchResults());
+
+    }, [isCitySearchOpen])
+
     function hClickResult(idx) {
 		dispatch(actionsCitiesAddCity(searchResult[idx]));
-		dispatch(actionCitiesClearSearchResults());
 		setIsCitySearchOpen(false);
 	}
 
