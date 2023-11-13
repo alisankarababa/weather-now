@@ -27,6 +27,8 @@ export default function CityGallery() {
     const [cntCityCardToShow, setCntCityCardToShow] = useState(0);
 
     const refCityGallery = useRef(null);
+    const refPopup = useRef(null);
+    
     const [widthCityGallery, setWidthCityGallery] = useState(0);
 
 
@@ -95,14 +97,25 @@ export default function CityGallery() {
             }
         }
     
+        function hMouseDown (e) {
+
+            if(refPopup.current && !refPopup.current.contains(e.target)) {
+                console.log("here");
+                setIsCitySearchOpen(false);
+            }
+        }
+
         updateComponentWidth();
 
         window.addEventListener('resize', updateComponentWidth);
         document.addEventListener("keydown", hKeyDown);
+        document.addEventListener("mousedown", hMouseDown);
+
     
         return () => {
             window.removeEventListener('resize', updateComponentWidth);
-            document.removeEventListener("keydown", hKeyDown)
+            document.removeEventListener("keydown", hKeyDown);
+            document.removeEventListener("mousedown", hMouseDown);
         };
     }, []);
 
@@ -136,6 +149,7 @@ export default function CityGallery() {
                     placeholder="Search a city..."
                     results={ searchResult }
                     renderResult={ renderSearchResult }
+                    reference={refPopup}
                 />
             }
         </div>

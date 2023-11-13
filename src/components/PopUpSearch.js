@@ -9,6 +9,7 @@ export default function PopUpSearch({
 	placeholder,
 	results,
 	renderResult,
+    reference
 }) {
 	const {
 		register,
@@ -17,7 +18,7 @@ export default function PopUpSearch({
 	} = useForm({ mode: "onChange" });
 
 	return (
-		<div className={`${className ? className : ""} popup-search-container`}>
+		<div className={`${className ? className : ""} popup-search-container`} ref={reference}>
 			<div className={`popup-search`}>
 				<form
 					className="popup-search__form"
