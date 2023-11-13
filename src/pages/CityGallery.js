@@ -7,11 +7,10 @@ import CardAddCity from "../components/CardAddCity"
 import iconRight from "../assets/chevron-compact-right.svg"
 import iconLeft from "../assets/chevron-compact-left.svg"
 import { useState, useEffect, useRef } from "react"
-import { useForm } from 'react-hook-form';
 
 import { arrSliceCircular, arrIncrementIdxCircularly, arrDecrementIdxCircularly } from "../utils/utils"
 
-import { citiesGetCityWeather, citiesSearchCity, actionsCitiesAddCity, actionsCitiesDeleteCity } from "../store/actions/actionsCities"
+import { citiesGetCityWeather, citiesSearchCity, actionsCitiesAddCity, actionsCitiesDeleteCity, actionCitiesClearSearchResults } from "../store/actions/actionsCities"
 
 import { useDispatch } from "react-redux"
 import PopUpSearch from "../components/PopUpSearch"
@@ -30,9 +29,6 @@ export default function CityGallery() {
     const refCityGallery = useRef(null);
     const [widthCityGallery, setWidthCityGallery] = useState(0);
 
-    function hAddCity ( city ) {
-        dispatch(actionsCitiesAddCity(city));
-    }
 
     function hDeleteCity ( cityId ) {
         dispatch(actionsCitiesDeleteCity(cityId));
@@ -75,15 +71,8 @@ export default function CityGallery() {
 
     }, [ citiesToShow, isBusy ]);
 
-    useEffect(() => {
-        console.log("city added");
-        console.log("cities", cities);
-
-    }, [cities]);
 
     const [isCitySearchOpen, setIsCitySearchOpen] = useState();
-
-    
 
 
     useEffect(() => {
@@ -102,6 +91,7 @@ export default function CityGallery() {
 
             if ( "Escape" === e.key ) {
                 setIsCitySearchOpen(false);
+                dispatch(actionCitiesClearSearchResults());
             }
         }
     
@@ -116,9 +106,14 @@ export default function CityGallery() {
         };
     }, []);
 
-    
+    function hClickResult(idx) {
+		dispatch(actionsCitiesAddCity(searchResult[idx]));
+		dispatch(actionCitiesClearSearchResults());
+		setIsCitySearchOpen(false);
+	}
+
+
     return (
-        <>
         <div ref={refCityGallery} className="city-gallery">
             <div className="gallery">
                 <img onClick={() => setIdxStart(arrDecrementIdxCircularly(cities, idxStart))} className="gallery__button"src={iconLeft} alt="icon-left"/>
@@ -137,14 +132,12 @@ export default function CityGallery() {
             
                 <PopUpSearch
                     hSearch={ (searchValue) => dispatch( citiesSearchCity( searchValue ) ) }
-                    hClickResult={ (idx) => dispatch( actionsCitiesAddCity( searchResult[idx] ) ) }
+                    hClickResult={ hClickResult }
                     placeholder="Search a city..."
                     results={ searchResult }
                     renderResult={ renderSearchResult }
                 />
             }
         </div>
-        </>
-
     );
 }

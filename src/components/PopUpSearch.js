@@ -1,10 +1,9 @@
 import "./PopUpSearch.css";
 
 import { useForm } from "react-hook-form";
-import { nanoid } from "nanoid";
-import { useEffect } from "react";
 
 export default function PopUpSearch({
+    className,
 	hSearch,
 	hClickResult,
 	placeholder,
@@ -14,11 +13,11 @@ export default function PopUpSearch({
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
-	} = useForm();
+        formState: { isValid ,errors}
+	} = useForm({ mode: "onChange" });
 
 	return (
-		<div className="popup-search-container">
+		<div className={`${className ? className : ""} popup-search-container`}>
 			<div className={`popup-search`}>
 				<form
 					className="popup-search__form"
@@ -32,14 +31,20 @@ export default function PopUpSearch({
 						type="search"
 						className="popup-search__form__search-input popup-search__form__item"
 						placeholder={placeholder}
-						{...register("search_value", { required: true, maxLength: 80 })}
+						{...register("search_value", { 
+                            required: { value: true, message: "Search field cannot be empty" },
+                            minLength: { value: 3, message: 'City name cannot be shorter than 3 characters' },
+                            maxLength : { value: 15, message: 'City name cannot be longer than 15 characters' }
+                        })}
 					/>
 					<input
+                        disabled ={!isValid}
 						type="submit"
 						className="popup-search__form__button popup-search__form__item"
 						value="Search"
 					/>
 				</form>
+                {errors.search_value && <div className="form-error">{errors.search_value.message}</div>}
 
 				{results.length > 0 && (
 					<div className="popup-search__results--container">
