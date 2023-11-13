@@ -1,9 +1,12 @@
 .city-gallery {
     container-type: inline-size;
     container-name: city-gallery;
+    padding-top: 5em;
+    padding-bottom: 5em;
 }
 
 .gallery {
+
     display: flex;
     justify-content: space-between;
     column-gap: 2em;
