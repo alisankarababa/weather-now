@@ -11,6 +11,7 @@ export const actionsOfCities = {
     FETCHING_CITY_SEARCH: "cities/ searching for a city",
     FETCH_SUCCESS_CITY_SEARCH: "cities/ search for a city name succeded",
     FETCH_FAIL_CITY_SEARCH: "cities/ search for a city name failed",
+    SEARCH_RESULTS_CLEARED: "cities /search results cleared"
 }
 
 
@@ -39,6 +40,11 @@ export const citiesGetCityWeather = ( city ) => (dispatch) => {
 function citiesGettingCityCurrentWeather() {
     return { type: actionsOfCities.FETCHING_CITY_CURRENT_WEATHER };
 }
+
+export function actionCitiesClearSearchResults() {
+    return { type: actionsOfCities.SEARCH_RESULTS_CLEARED };
+}
+
 
 function citiesFecthSuccessCityCurrentWeather(city_id, response) {
     return { type: actionsOfCities.FETCH_SUCCESS_CITY_CURRENT_WEATHER, payload: {city_id, response}};
