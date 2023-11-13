@@ -3,6 +3,7 @@
     container-name: city-gallery;
     padding-top: 5em;
     padding-bottom: 5em;
+    position: relative;
 }
 
 .gallery {
