@@ -2,13 +2,15 @@
     aspect-ratio: 2 / 3;
 
     border-radius: 20px;
+    box-shadow: 0px -5px 10px 1px rgba(255,255,255,0.3);
 
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     padding: 1em 1em;
     align-items: center;
     text-transform: uppercase;
+    position: relative;
 }
 
 .card-city__name {
@@ -17,9 +19,11 @@
 
 .card-city__temp {
     font-size: 2.5rem;
+    position: relative;
 }
 
 .card-city__temp::after {
+    position: absolute;
     content: "\00b0";
 }
 
@@ -27,6 +31,7 @@
     align-self: stretch;
     display: flex;
     justify-content: space-between;
+    padding: 0 1em;
 }
 
 .card-city__tempextrema {
@@ -63,20 +68,37 @@
 }
 
 .card-city__icon {
-    width: 60%;
+    width: 50%;
+    border-radius: 50%;
+    box-shadow: 0px 0px 2px rgba(255, 255, 255, 0.9);    
+    object-fit: cover;
     aspect-ratio: 1 / 1;
 }
 
 .card-city__btndelete {
     margin-top: 1em;
+    background-color: transparent;
+    width: min-content;
+    border-radius: 50%;
+    border: none;
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    
 }
 
-.theme-dark .card-city__btndelete {
-    background-color: hsla(0, 100%, 19%, 0.89);
+.card-city__btndelete:hover {
+    font-size: 1.5rem;
+    aspect-ratio: 1 / 1;
+    color: red;
+    box-shadow: 0px 0px 3px red;
 }
+
+
 
 .card-city.theme-dark {
-    background: linear-gradient(hsl(240,89%,25%), hsl(286,67%,32%));
+    background: linear-gradient(hsl(286,67%,32%),hsl(240,89%,25%));
     color: white;
 }
 
